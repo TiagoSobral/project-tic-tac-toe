@@ -49,13 +49,19 @@ const createPlayers = (nameOne = "PlayerOne", nameTwo = "PlayerTwo") => {
 
 function gameFlow() {
     const board = gameBoard();
+    const player = createPlayers().players;
 
-    let playerOne = createPlayers().players[0];
-    let playerTwo = createPlayers().players[1];
+    let playerOne = player[0];
+    let playerTwo = player[1];
+
+    const initialBoard = () => {
+       const board = gameBoard().getBoard();
+       return console.log(board);
+    }
 
     const playRound = (row, column) => {
-        console.log(board.getBoard());
-        
+        initialBoard();
+
         // playerOne Turn
         console.log(`Let's play, its your turn ...${playerOne.playerOneName}`);
         board.chooseCell(row, column, playerOne.mark);
