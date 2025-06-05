@@ -37,25 +37,22 @@ const game = gameBoard();
 
 
 
-// const tiago = [[".",".","."],[".",".","."],[".","t","."]];
-
-
-// tiago.map((element,row) => {
-//     element.map((value, column)=> {
-        // if (value is available change with player marker)
-//         console.log(`Value: ${value}, Column: ${column}, Row: ${row}`)
-//     })
-// });
 
 
 
 
 
+const createPlayer = (nameOne = "PlayerOne", nameTwo = "PlayerTwo") => {
+    const players = [
+        {   playerOneName: nameOne,
+            mark: "X",
+        },{ playerTwoName: nameTwo,
+            mark: "O",
+        }
+    ];
 
-
-
-
-
+    return {players};
+}
 
 
 
