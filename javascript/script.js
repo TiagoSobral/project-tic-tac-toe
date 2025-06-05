@@ -7,56 +7,75 @@ function gameBoard() {
     for (let r = 0; r < rows; r++) {
         board[r] = [];
         for (let c = 0; c < columns; c++ ) {
-            board[r].push(cell());
+            board[r].push(".");
         }
     };
     
     const getBoard = () => board;
 
-    const chooseCell = (row, column, player) => {
+
+    const chooseCell = (row, column, mark) => {
+        const cellValid = board.filter((element, index) => index === row).map((element) => element[column]);
+
+        if (cellValid == ".") {
+            board[row][column] = mark;
+        }
+        else {
+            console.log("Cell not available")
+        }
+
     };
 
-    const printMarker = (marker, index, array) => {
-        const boardWithMarker = board.map((marker, index, array) => {
-            
-            return array[index] = marker;
-        });
-        
-        return boardWithMarker;
+    const printBoard = () => {
+        return board;
     };
 
-    return {getBoard, chooseCell, printMarker};
+    return {getBoard, chooseCell, printBoard};
 };
 
 const game = gameBoard();
 
 
-function cell() {
-    let value = ".";
 
-    const addMarker = (marker) => {value = marker};
+// const tiago = [[".",".","."],[".",".","."],[".","t","."]];
 
-    const getValue = () => {value};
 
-    return {addMarker, getValue};
-}
+// tiago.map((element,row) => {
+//     element.map((value, column)=> {
+        // if (value is available change with player marker)
+//         console.log(`Value: ${value}, Column: ${column}, Row: ${row}`)
+//     })
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // function createPlayer(name, mark) {
 //     // variables
-//     let playerOne = name.at(0).toUpperCase() + name.slice(1);
-//     let playerOneSymbol = mark.toUpperCase();
-//     let playerTwo = "Computer";
-//     let playerTwoSymbol;
-
-//     // opponent symbol
-//     function opponentMark(mark) {
-//         if (mark === "X") {
+//     const players = {
+//         playerOne: name.at(0).toUpperCase() + name.slice(1),
+//         playerOneSymbol: mark.toUpperCase(),
+//         playerTwo: "Computer",
+//         playerTwoSymbol: function() { 
+//             if (mark === "X") {
 //             return playerTwoSymbol = "O";
-//         }
+//             }
 //         else {
 //             return playerTwoSymbol = "X";
-//         }
-//     };
+//             }
+//         }    
+//     }
+
 
 //     opponentMark();
 
