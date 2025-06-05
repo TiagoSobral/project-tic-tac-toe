@@ -63,10 +63,10 @@ function gameFlow() {
 
     const changePlayerTurn = () => {
         if (playerTurn === playerOne) {
-           return playerTurn = playerTwo;
+           playerTurn = playerTwo;
         }
         else {
-            return  playerTurn;
+            playerTurn = playerOne;
         }
     }
 
@@ -75,11 +75,12 @@ function gameFlow() {
         initialBoard();
 
         // playerOne Turn
-        console.log(`Let's play, its your turn ...${playerTurn.name}`);
+        console.log(`Let's play, its your turn ... ${playerTurn.name}`);
         board.chooseCell(row, column, playerOne.mark);
         board.printBoard();
 
         changePlayerTurn();
+        console.log(playerTurn)
     };
 
 
