@@ -91,7 +91,8 @@ const controller = (function() {
 
         let rowWinner = rowOfBoleans.some((row) => row === true);
         let columnWinner = columnOfBoleans.some((column) => column === true);
-            debugger;
+
+        
         if (rowWinner || columnWinner) {
            console.log(`We have a winner, congratulations ${playerTurn.name}`);
         }
