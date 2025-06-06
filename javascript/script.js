@@ -77,7 +77,7 @@ const controller = (function() {
         board.chooseCell(row, column, playerTurn.mark);
         board.printBoard();
 
-                // gameEnd?
+         // gameEnd?
         let rowOfBoleans = board.getBoard().map((row) => {
             row.every((column) => column === playerTurn.mark);
         });
@@ -96,13 +96,15 @@ const controller = (function() {
         if (rowWinner) {
             console.log("We have a winner")
         }
-        if (columnWinner) {
+        else if (columnWinner) {
             console.log("we have a crazy winner");
         }
+        else {
+            // next player
+            changePlayerTurn();
+            console.log(`Its your turn ... ${playerTurn.name}!`)
+        }
         
-        // next player
-        changePlayerTurn();
-        console.log(`Its your turn ... ${playerTurn.name}!`);
     };
 
     console.log(`Let's Play some Tic Tac Toe!`)
