@@ -78,9 +78,8 @@ const controller = (function() {
         board.printBoard();
 
          // gameEnd?
-        let rowOfBoleans = board.getBoard().map((row) => {
-            row.every((column) => column === playerTurn.mark);
-        });
+        let rowOfBoleans = board.getBoard().map((row) => 
+            row.every((column) => column === playerTurn.mark));
 
         let columnOfBoleans = [];
 
@@ -92,12 +91,9 @@ const controller = (function() {
 
         let rowWinner = rowOfBoleans.some((row) => row === true);
         let columnWinner = columnOfBoleans.some((column) => column === true);
-
-        if (rowWinner) {
-            console.log("We have a winner")
-        }
-        else if (columnWinner) {
-            console.log("we have a crazy winner");
+            debugger;
+        if (rowWinner || columnWinner) {
+           console.log(`We have a winner, congratulations ${playerTurn.name}`);
         }
         else {
             // next player
