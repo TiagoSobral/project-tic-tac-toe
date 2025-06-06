@@ -18,16 +18,17 @@ function gameBoard() {
         const cellValid = board.filter((element, index) => index === row).map((element) => element[column]);
 
         if (cellValid == ".") {
-            return board[row][column] = mark;
+           return board[row][column] = mark;
+            
         }
         else {
-            console.log("Cell not available")
+            return console.log("Cell not available")
         }
 
     };
 
     const printBoard = () => {
-        console.log(board);
+       return console.log(board);
     };
 
     return {getBoard, chooseCell, printBoard};
@@ -61,15 +62,16 @@ function gameFlow() {
 
     const changePlayerTurn = () => {
       if (playerTurn === player[0]) {
-        playerTurn = player[1];
+        return playerTurn = player[1];
       }
       else {
-        playerTurn = [0];
+        return playerTurn = player[0];
       }
        
     }
 
     const playRound = (row, column) => {
+
         board.getBoard();
 
         // playerOne Turn
@@ -77,6 +79,30 @@ function gameFlow() {
         board.chooseCell(row, column, playerTurn.mark);
         board.printBoard();
 
+        // gameEnd?
+        let rowOfBoleans = board.getBoard().map((row) => {
+            row.every((column) => column === playerTurn.mark);
+        });
+
+        let columnOfBoleans = [];
+
+        for (let i = 0; i < 3 ; i++) {
+            columnOfBoleans
+            .push(board.getBoard()
+            .every((column) => column[i] === playerTurn.mark));}
+
+
+        let rowWinner = rowOfBoleans.some((row) => row === true);
+        let columnWinner = columnOfBoleans.some((column) => column === true);
+
+        if (rowWinner) {
+            console.log("We have a winner")
+        }
+        if (columnWinner) {
+            console.log("we have a crazy winner");
+        }
+        
+        // next player
         changePlayerTurn();
         console.log(`Its your turn ... ${playerTurn.name}!`);
     };
@@ -89,3 +115,6 @@ function gameFlow() {
 const controller = gameFlow();
 
 
+// for (let i = 0; i < 3 ; i++) {
+//    columnOfBoleans.push(tiago.every((column) => column[i] === "a"));
+// }
