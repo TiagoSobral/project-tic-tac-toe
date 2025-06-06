@@ -51,36 +51,34 @@ function gameFlow() {
     const board = gameBoard();
     const player = createPlayers().players;
 
-    let playerOne = player[0];
-    let playerTwo = player[1];
+    let playerTurn = player[0];
 
-    let playerTurn = playerOne;
-
-    const initialBoard = () => {
-       const board = gameBoard().getBoard();
-       return console.log(board);
-    }
+    // const initialBoard = () => {
+    //     console.log("Let's play some Tic Tac Toe");
+    //    const board = gameBoard().getBoard();
+    //    return console.log(board);
+    // }
 
     const changePlayerTurn = () => {
-        if (playerTurn === playerOne) {
-           playerTurn = playerTwo;
-        }
-        else {
-            playerTurn = playerOne;
-        }
+      if (playerTurn === player[0]) {
+        playerTurn = player[1];
+      }
+      else {
+        playerTurn = [0];
+      }
+       
     }
 
     const playRound = (row, column) => {
-        console.log("Let's play some Tic Tac Toe");
-        initialBoard();
+        board.getBoard();
 
         // playerOne Turn
-        console.log(`Let's play, its your turn ... ${playerTurn.name}`);
-        board.chooseCell(row, column, playerOne.mark);
+        console.log(`${playerTurn.name} has made a move...`);
+        board.chooseCell(row, column, playerTurn.mark);
         board.printBoard();
 
         changePlayerTurn();
-        console.log(playerTurn)
+        console.log(`Its your turn ... ${playerTurn.name}!`);
     };
 
 
