@@ -77,24 +77,25 @@ const controller = (function() {
         board.chooseCell(row, column, playerTurn.mark);
         board.printBoard();
 
-         // gameEnd?
-        let rowOfBoleans = board.getBoard().map((row) => 
-            row.every((column) => column === playerTurn.mark));
 
+         // check if rows or columns have the same value.
+        let rowOfBoleans = board.getBoard().map((row) => row.every((column) => column === playerTurn.mark));
         let columnOfBoleans = [];
+        let rowWinner = rowOfBoleans.some((row) => row === true);
+        let columnWinner = columnOfBoleans.some((column) => column === true);
 
+        
         for (let i = 0; i < 3 ; i++) {
             columnOfBoleans
             .push(board.getBoard()
             .every((column) => column[i] === playerTurn.mark));}
 
 
-        let rowWinner = rowOfBoleans.some((row) => row === true);
-        let columnWinner = columnOfBoleans.some((column) => column === true);
-
-        
         if (rowWinner || columnWinner) {
-           console.log(`We have a winner, congratulations ${playerTurn.name}`);
+           return console.log(`We have a winner, congratulations ${playerTurn.name}`);
+        }
+        else if () {
+            
         }
         else {
             // next player
