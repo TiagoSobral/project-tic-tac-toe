@@ -48,7 +48,7 @@ const createPlayers = (nameOne = "PlayerOne", nameTwo = "PlayerTwo") => {
 }
 
 
-function gameFlow() {
+const controller = (function() {
     const board = gameBoard();
     const player = createPlayers().players;
 
@@ -72,14 +72,12 @@ function gameFlow() {
 
     const playRound = (row, column) => {
 
-        board.getBoard();
-
         // playerOne Turn
         console.log(`${playerTurn.name} has made a move...`);
         board.chooseCell(row, column, playerTurn.mark);
         board.printBoard();
 
-        // gameEnd?
+                // gameEnd?
         let rowOfBoleans = board.getBoard().map((row) => {
             row.every((column) => column === playerTurn.mark);
         });
@@ -107,14 +105,11 @@ function gameFlow() {
         console.log(`Its your turn ... ${playerTurn.name}!`);
     };
 
+    console.log(`Let's Play some Tic Tac Toe!`)
+    console.log(board.getBoard());
+    console.log(`Make a play ... ${playerTurn.name}`)
 
     return {playRound};
 
-}
+})();
 
-const controller = gameFlow();
-
-
-// for (let i = 0; i < 3 ; i++) {
-//    columnOfBoleans.push(tiago.every((column) => column[i] === "a"));
-// }
