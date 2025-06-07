@@ -18,13 +18,12 @@ function gameBoard() {
         const cellValid = board.filter((element, index) => index === row).map((element) => element[column]);
 
         if (cellValid == ".") {
-           return board[row][column] = mark;
+           board[row][column] = mark;
             
         }
         else {
-            return console.log("Cell not available")
+            console.log("Cell not available")
         }
-
     };
 
     const printBoard = () => {
@@ -50,6 +49,7 @@ const createPlayers = (nameOne = "PlayerOne", nameTwo = "PlayerTwo") => {
 
 const controller = (function() {
     const board = gameBoard();
+    const boardValues = gameBoard().getBoard();
     const player = createPlayers().players;
 
     let playerTurn = player[0];
@@ -62,15 +62,44 @@ const controller = (function() {
 
     const changePlayerTurn = () => {
       if (playerTurn === player[0]) {
-        return playerTurn = player[1];
+        playerTurn = player[1];
       }
       else {
-        return playerTurn = player[0];
+        playerTurn = player[0];
       }
        
+      console.log(`Its your turn ... ${playerTurn.name}!`)
     }
 
     const playRound = (row, column) => {
+        
+        let boardIsFull = boardValues.map((row) => row.every((column) => column !== "."));
+        let isDraw = boardIsFull.every((column) => column === true);
+        
+        
+        // check if rows or columns have the same value.
+        let rowOfBoleans = boardValues.map((row) => row.every((column) => column === playerTurn.mark));
+        let rowWinner = rowOfBoleans.some((row) => row === true);
+        
+        
+        let columnOfBoleans = [];
+        let columnWinner = columnOfBoleans.some((column) => column === true);
+
+        
+        // let diagonalRight = [boardValues[0][0], boardValues[1][1], boardValues[2][2]]
+        // .every((value) => value === "X"|| value === "O");
+
+        // let diagonalLeft = [boardValues[0][2], boardValues[1][1], boardValues[2][0]]
+        // .every((value) => value === "X"|| value === "O");
+
+
+        // loop for checking columns
+        for (let i = 0; i < 3 ; i++) {
+            columnOfBoleans
+            .push(boardValues
+            .every((column) => column[i] === playerTurn.mark));}
+
+
 
         // playerOne Turn
         console.log(`${playerTurn.name} has made a move...`);
@@ -78,39 +107,24 @@ const controller = (function() {
         board.printBoard();
 
 
-        let boardIsFull = board.getBoard().map((row) => row.every((column) => column !== "."));
-        let isDraw = boardIsFull.every((column) => column === true);
-        // check if rows or columns have the same value.
-        let rowOfBoleans = board.getBoard().map((row) => row.every((column) => column === playerTurn.mark));
-        let rowWinner = rowOfBoleans.some((row) => row === true);
-        
-
-        let columnOfBoleans = [];
-        let columnWinner = columnOfBoleans.some((column) => column === true);
-
-
-        for (let i = 0; i < 3 ; i++) {
-            columnOfBoleans
-            .push(board.getBoard()
-            .every((column) => column[i] === playerTurn.mark));}
-
 
         if (rowWinner || columnWinner) {
            return console.log(`We have a winner, congratulations ${playerTurn.name}`);
         }
+
         else if (isDraw) {
             return console.log(`Better luck next time, its a Draw ...`);
         }
+        
         else {
             // next player
             changePlayerTurn();
-            console.log(`Its your turn ... ${playerTurn.name}!`)
         }
         
     };
 
     console.log(`Let's Play some Tic Tac Toe!`)
-    console.log(board.getBoard());
+    console.log(boardValues);
     console.log(`Make a play ... ${playerTurn.name}`)
 
     return {playRound};
