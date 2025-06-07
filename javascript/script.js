@@ -78,8 +78,8 @@ const controller = (function() {
         board.printBoard();
 
 
-        let boardIsDraw = board.getBoard().map((row) => row.every((column) => column === "."))
-       
+        let boardIsFull = board.getBoard().map((row) => row.every((column) => column !== "."));
+        let isDraw = boardIsFull.every((column) => column === true);
         // check if rows or columns have the same value.
         let rowOfBoleans = board.getBoard().map((row) => row.every((column) => column === playerTurn.mark));
         let rowWinner = rowOfBoleans.some((row) => row === true);
@@ -95,18 +95,13 @@ const controller = (function() {
             .every((column) => column[i] === playerTurn.mark));}
 
 
-
-
         if (rowWinner || columnWinner) {
            return console.log(`We have a winner, congratulations ${playerTurn.name}`);
         }
-        else if (!boardIsDraw) {
+        else if (isDraw) {
             return console.log(`Better luck next time, its a Draw ...`);
         }
         else {
-            debugger;
-            console.log(boardIsDraw);
-
             // next player
             changePlayerTurn();
             console.log(`Its your turn ... ${playerTurn.name}!`)
