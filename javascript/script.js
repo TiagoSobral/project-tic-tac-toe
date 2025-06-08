@@ -53,17 +53,15 @@ const controller = (function() {
 
     let playerTurn = player[0];
 
-    // const newRound = () => {
 
-    //     console.log("Let's play some Tic Tac Toe");
-       
-    //     const board = gameBoard().getBoard();
-       
-    //     console.log(board);
+    const playRound = (row, column) => {
 
-    //     console.log(`Make a play ... ${playerTurn.name}`)
-    // }
+        // playerOne Turn
+        console.log(`${playerTurn.name} has made a move...`);
+        board.chooseCell(row, column, playerTurn.mark);
+        board.printBoard();
 
+    
     const changePlayerTurn = () => {
 
       if (playerTurn === player[0]) {
@@ -76,20 +74,29 @@ const controller = (function() {
       console.log(`Its your turn ... ${playerTurn.name}!`)
     }
 
-    const playRound = (row, column) => {
 
-        // playerOne Turn
-        console.log(`${playerTurn.name} has made a move...`);
-        board.chooseCell(row, column, playerTurn.mark);
-        board.printBoard();
+    const newGame = () => {
+
+        console.log("Let's play some Tic Tac Toe");
+       
+        const board = gameBoard().getBoard();
+       
+        console.log(board);
+
+        console.log(`Make a play ... ${playerTurn.name}`)
+    }
         
-        let boardIsFull =  board.getBoard().map((row) => row.every((column) => column !== "."));
-        let isDraw = boardIsFull.every((column) => column === true);
+
+        // win conditions
+        let isDraw =  board.getBoard()
+        .map((row) => row.every((column) => column !== "."))
+        .every((column) => column === true);
         
         
         // check if rows or columns have the same value.
-        let rowOfBoleans = board.getBoard().map((row) => row.every((column) => column === playerTurn.mark));
-        let rowWinner = rowOfBoleans.some((row) => row === true);
+        let rowWinner = board.getBoard()
+        .map((row) => row.every((column) => column === playerTurn.mark))
+        .some((row) => row === true);
         
         
         let columnWinner = () => {
@@ -113,17 +120,22 @@ const controller = (function() {
 
         if (rowWinner || columnWinner() || diagonalLeft() || diagonalRight()) {
            console.log(`We have a winner, congratulations ${playerTurn.name}`);
+           newGame();
         }
        
         
         else if (isDraw) {
-            return console.log(`Better luck next time, its a Draw ...`);
+            console.log(`Better luck next time, its a Draw ...`);
+            newGame();
         }
         
         else {
             // next player
             changePlayerTurn();
         }
+
+
+
     };
 
     console.log(`Let's Play some Tic Tac Toe!`)
