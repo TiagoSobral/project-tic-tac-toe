@@ -83,12 +83,10 @@ const controller = (function() {
             .every((column) => column[i] === playerTurn.mark));}
 
 
-
         // playerOne Turn
         console.log(`${playerTurn.name} has made a move...`);
         board.chooseCell(row, column, playerTurn.mark);
         board.printBoard();
-
 
 
         if (rowWinner 
@@ -99,12 +97,14 @@ const controller = (function() {
         ||
             ((board.getBoard()[2][0] && board.getBoard()[1][1] && board.getBoard()[0][2]) === ("X" || "O"))
         ){
-           return console.log(`We have a winner, congratulations ${playerTurn.name}`);
+           console.log(`We have a winner, congratulations ${playerTurn.name}`);
+           newRound();
         }
        
         
         else if (isDraw) {
-            return console.log(`Better luck next time, its a Draw ...`);
+            console.log(`Better luck next time, its a Draw ...`);
+            newRound();
         }
         
         else {
