@@ -53,22 +53,6 @@ const controller = (function() {
 
     let playerTurn = player[0];
 
-    // const initialBoard = () => {
-    //     console.log("Let's play some Tic Tac Toe");
-    //    const board = gameBoard().getBoard();
-    //    return console.log(board);
-    // }
-
-    const changePlayerTurn = () => {
-      if (playerTurn === player[0]) {
-        playerTurn = player[1];
-      }
-      else {
-        playerTurn = player[0];
-      }
-       
-      console.log(`Its your turn ... ${playerTurn.name}!`)
-    }
 
     const playRound = (row, column) => {
         
@@ -85,11 +69,11 @@ const controller = (function() {
         let columnWinner = columnOfBoleans.some((column) => column === true);
 
         
-        let diagonalRight = [board.getBoard()[0][0], board.getBoard()[1][1], board.getBoard()[2][2]]
-        .every((value) => value === "X"|| value === "O");
+        // let diagonalRight = [board.getBoard()[0][0], board.getBoard()[1][1], board.getBoard()[2][2]]
+        // .every((value) => value === "X"|| value === "O");
 
-        let diagonalLeft = [board.getBoard()[0][2], board.getBoard()[1][1], board.getBoard()[2][0]]
-        .every((value) => value === "X"|| value === "O");
+        // let diagonalLeft = [board.getBoard()[0][2], board.getBoard()[1][1], board.getBoard()[2][0]]
+        // .every((value) => value === "X"|| value === "O");
 
 
         // loop for checking columns
@@ -129,6 +113,32 @@ const controller = (function() {
         }
         
     };
+
+    const changePlayerTurn = () => {
+
+      if (playerTurn === player[0]) {
+        playerTurn = player[1];
+      }
+      else {
+        playerTurn = player[0];
+      }
+       
+      console.log(`Its your turn ... ${playerTurn.name}!`)
+    }
+
+
+    const newRound = () => {
+
+        console.log("Let's play some Tic Tac Toe");
+       
+        const board = gameBoard().getBoard();
+       
+        console.log(board);
+
+        console.log(`Make a play ... ${playerTurn.name}`)
+    }
+
+
 
     console.log(`Let's Play some Tic Tac Toe!`)
     console.log(boardValues);
