@@ -13,7 +13,6 @@ function gameBoard() {
     
     const getBoard = () => board;
 
-
     const chooseCell = (row, column, mark) => {
         const cellValid = board.filter((element, index) => index === row).map((element) => element[column]);
 
@@ -86,11 +85,11 @@ const controller = (function() {
         let columnWinner = columnOfBoleans.some((column) => column === true);
 
         
-        // let diagonalRight = [boardValues[0][0], boardValues[1][1], boardValues[2][2]]
-        // .every((value) => value === "X"|| value === "O");
+        let diagonalRight = [board.getBoard()[0][0], board.getBoard()[1][1], board.getBoard()[2][2]]
+        .every((value) => value === "X"|| value === "O");
 
-        // let diagonalLeft = [boardValues[0][2], boardValues[1][1], boardValues[2][0]]
-        // .every((value) => value === "X"|| value === "O");
+        let diagonalLeft = [board.getBoard()[0][2], board.getBoard()[1][1], board.getBoard()[2][0]]
+        .every((value) => value === "X"|| value === "O");
 
 
         // loop for checking columns
@@ -108,10 +107,18 @@ const controller = (function() {
 
 
 
-        if (rowWinner || columnWinner) {
+        if (rowWinner 
+        || 
+            columnWinner
+        ||
+            ((board.getBoard()[0][0] && board.getBoard()[1][1] && board.getBoard()[2][2]) === ("X" || "O")) 
+        ||
+            ((board.getBoard()[2][0] && board.getBoard()[1][1] && board.getBoard()[0][2]) === ("X" || "O"))
+        ){
            return console.log(`We have a winner, congratulations ${playerTurn.name}`);
         }
-
+       
+        
         else if (isDraw) {
             return console.log(`Better luck next time, its a Draw ...`);
         }
