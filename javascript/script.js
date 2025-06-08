@@ -77,19 +77,28 @@ const controller = (function() {
     }
 
     const playRound = (row, column) => {
+
+        // playerOne Turn
+        console.log(`${playerTurn.name} has made a move...`);
+        board.chooseCell(row, column, playerTurn.mark);
+        board.printBoard();
         
-        let boardIsFull = boardValues.map((row) => row.every((column) => column !== "."));
+        let boardIsFull =  board.getBoard().map((row) => row.every((column) => column !== "."));
         let isDraw = boardIsFull.every((column) => column === true);
         
         
         // check if rows or columns have the same value.
-        let rowOfBoleans = boardValues.map((row) => row.every((column) => column === playerTurn.mark));
+        let rowOfBoleans = board.getBoard().map((row) => row.every((column) => column === playerTurn.mark));
         let rowWinner = rowOfBoleans.some((row) => row === true);
         
         
         let columnOfBoleans = [];
         let columnWinner = columnOfBoleans.some((column) => column === true);
 
+        // loop for checking columns
+        for (let i = 0; i < 3 ; i++) {
+            columnOfBoleans.push(board.getBoard().every((column) => column[i] === playerTurn.mark));
+        }
         
         let diagonalRight = () => [board.getBoard()[0][0], board.getBoard()[1][1], board.getBoard()[2][2]]
         .every((value) => value === "X"|| value === "O");
@@ -98,27 +107,8 @@ const controller = (function() {
         .every((value) => value === "X"|| value === "O");
 
 
-        // loop for checking columns
-        for (let i = 0; i < 3 ; i++) {
-            columnOfBoleans
-            .push(boardValues
-            .every((column) => column[i] === playerTurn.mark));
-        }
 
-
-
-        // playerOne Turn
-        console.log(`${playerTurn.name} has made a move...`);
-        board.chooseCell(row, column, playerTurn.mark);
-        board.printBoard();
-
-
-
-        if (rowWinner       || 
-            columnWinner    ||
-            diagonalLeft()  ||
-            diagonalRight()) {
-
+        if (rowWinner || columnWinner || diagonalLeft() || diagonalRight()) {
            console.log(`We have a winner, congratulations ${playerTurn.name}`);
         }
        
@@ -131,7 +121,6 @@ const controller = (function() {
             // next player
             changePlayerTurn();
         }
-        
     };
 
     console.log(`Let's Play some Tic Tac Toe!`)
@@ -141,4 +130,6 @@ const controller = (function() {
     return {playRound};
 
 })();
+
+
 
