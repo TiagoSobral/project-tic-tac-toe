@@ -92,13 +92,16 @@ const controller = (function() {
         let rowWinner = rowOfBoleans.some((row) => row === true);
         
         
-        let columnOfBoleans = [];
-        let columnWinner = columnOfBoleans.some((column) => column === true);
+        let columnWinner = () => {
+            let columnOfBoleans = [];
+        
+            for (let i = 0; i < 3 ; i++) {
+                columnOfBoleans.push(board.getBoard().every((column) => column[i] === playerTurn.mark));
+            }
 
-        // loop for checking columns
-        for (let i = 0; i < 3 ; i++) {
-            columnOfBoleans.push(board.getBoard().every((column) => column[i] === playerTurn.mark));
+          return  columnOfBoleans.some((column) => column === true);
         }
+
         
         let diagonalRight = () => [board.getBoard()[0][0], board.getBoard()[1][1], board.getBoard()[2][2]]
         .every((value) => value === "X"|| value === "O");
@@ -108,7 +111,7 @@ const controller = (function() {
 
 
 
-        if (rowWinner || columnWinner || diagonalLeft() || diagonalRight()) {
+        if (rowWinner || columnWinner() || diagonalLeft() || diagonalRight()) {
            console.log(`We have a winner, congratulations ${playerTurn.name}`);
         }
        
