@@ -81,6 +81,7 @@ const controller = (function() {
 
 
     const newGame = () => {
+        
         playerTurn =  player[0];
 
         console.log("Let's play some Tic Tac Toe");
@@ -95,7 +96,16 @@ const controller = (function() {
     
 
     const playRound = (row, column) => {
+        
         let cellValid = board.isValid(row, column);
+
+        // check if input is accepted
+        if (0 < row || row > 3 ||  0 < column || column > 3) {
+            console.log("Invalid Input");
+            board.printBoard();
+            console.log(`${playerTurn.name} try again...`)
+            return;
+        }
 
         // check if play is possible 
         if (cellValid === true) {
@@ -109,9 +119,11 @@ const controller = (function() {
         } 
 
         else {
-            console.log(`${playerTurn.name} make a move again...`);
+            console.log(`${playerTurn.name} unavailable play...`);
             
             board.printBoard();
+
+            console.log(`${playerTurn.name} play again...`);
             
             return;
         }
