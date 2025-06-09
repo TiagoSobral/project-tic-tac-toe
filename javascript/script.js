@@ -81,6 +81,7 @@ const controller = (function() {
 
 
     const newGame = () => {
+        playerTurn =  player[0];
 
         console.log("Let's play some Tic Tac Toe");
        
