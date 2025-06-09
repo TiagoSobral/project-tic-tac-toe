@@ -14,21 +14,23 @@ function gameBoard() {
     const getBoard = () => board;
 
     const isValid = (row, column) => {
-        const cellValid = board.filter((element, index) => index === row).map((element) => element[column]);
-        let result;
+        const cellCheck = board.filter((element, index) => index === row).map((element) => element[column]);
+        // let result;
 
-        if (cellValid == ".") {
-           return result = true;
+        if (cellCheck != ".") {
+            // return result = false;
+            return false;
         }
-        if (cellValid != ".") {
-            return result = false;
+        else {
+            return true;
         }
-    
+
     };
 
     const chooseCell = (row, column, mark) => {
+        let cellValid = isValid(row, column);
 
-        if (isValid(row, column) == true) {
+        if (cellValid == true) {
            board[row][column] = mark;
             
         }
@@ -66,14 +68,14 @@ const controller = (function() {
 
     const changePlayerTurn = () => {
 
-      if (playerTurn === player[0]) {
+        if (playerTurn === player[0]) {
         
-        playerTurn = player[1];
+            playerTurn = player[1];
       }
 
-      else {
+        else {
         
-        playerTurn = player[0];
+            playerTurn = player[0];
       }
        
       console.log(`Its your turn ... ${playerTurn.name}!`)
@@ -100,10 +102,13 @@ const controller = (function() {
         let cellValid = board.isValid(row, column);
 
         // check if input is accepted
-        if (0 < row || row > 3 ||  0 < column || column > 3) {
+        if (0 > row || row < 3 || 0 > column || column < 3) {
             console.log("Invalid Input");
+            
             board.printBoard();
+            
             console.log(`${playerTurn.name} try again...`)
+            
             return;
         }
 
@@ -119,11 +124,11 @@ const controller = (function() {
         } 
 
         else {
-            console.log(`${playerTurn.name} unavailable play...`);
+            console.log(`${playerTurn.name}, that play is not available...`);
             
             board.printBoard();
 
-            console.log(`${playerTurn.name} play again...`);
+            console.log(`${playerTurn.name} try again...`);
             
             return;
         }
