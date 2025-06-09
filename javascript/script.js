@@ -13,23 +13,33 @@ function gameBoard() {
     
     const getBoard = () => board;
 
-    const chooseCell = (row, column, mark) => {
+    const isValid = (row, column) => {
         const cellValid = board.filter((element, index) => index === row).map((element) => element[column]);
+        let result;
 
         if (cellValid == ".") {
+           return result = true;
+        }
+        if (cellValid != ".") {
+            return result = false;
+        }
+    
+    };
+
+    const chooseCell = (row, column, mark) => {
+
+        if (isValid(row, column) == true) {
            board[row][column] = mark;
             
         }
-        else {
-            console.log("Cell not available")
-        }
+
     };
 
     const printBoard = () => {
        return console.log(board);
     };
 
-    return {getBoard, chooseCell, printBoard};
+    return {getBoard, chooseCell, isValid, printBoard};
 };
 
 
@@ -47,27 +57,22 @@ const createPlayers = (nameOne = "PlayerOne", nameTwo = "PlayerTwo") => {
 
 
 const controller = (function() {
+    
     const board = gameBoard();
     const boardValues = gameBoard().getBoard();
     const player = createPlayers().players;
 
     let playerTurn = player[0];
 
-
-    const playRound = (row, column) => {
-
-        // playerOne Turn
-        console.log(`${playerTurn.name} has made a move...`);
-        board.chooseCell(row, column, playerTurn.mark);
-        board.printBoard();
-
-    
     const changePlayerTurn = () => {
 
       if (playerTurn === player[0]) {
+        
         playerTurn = player[1];
       }
+
       else {
+        
         playerTurn = player[0];
       }
        
@@ -85,9 +90,33 @@ const controller = (function() {
 
         console.log(`Make a play ... ${playerTurn.name}`)
     }
+
+    
+
+    const playRound = (row, column) => {
+        let cellValid = board.isValid(row, column);
+
+        // check if play is possible 
+        if (cellValid === true) {
+            console.log(`${playerTurn.name} has made a move...`);
+            
+            board.chooseCell(row, column, playerTurn.mark);
+            
+            board.printBoard();
+            
+            changePlayerTurn();
+        } 
+
+        else {
+            console.log(`${playerTurn.name} make a move again...`);
+            
+            board.printBoard();
+            
+            return;
+        }
         
 
-        // win conditions
+        // WIN VARIABLES  
         let isDraw =  board.getBoard()
         .map((row) => row.every((column) => column !== "."))
         .every((column) => column === true);
@@ -117,24 +146,16 @@ const controller = (function() {
         .every((value) => value === "X"|| value === "O");
 
 
-
+        // WIN CONDITIONS
         if (rowWinner || columnWinner() || diagonalLeft() || diagonalRight()) {
            console.log(`We have a winner, congratulations ${playerTurn.name}`);
            newGame();
         }
-       
         
         else if (isDraw) {
             console.log(`Better luck next time, its a Draw ...`);
             newGame();
         }
-        
-        else {
-            // next player
-            changePlayerTurn();
-        }
-
-
 
     };
 
