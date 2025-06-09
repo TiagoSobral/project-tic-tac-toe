@@ -102,7 +102,7 @@ const controller = (function() {
         let cellValid = board.isValid(row, column);
 
         // check if input is accepted
-        if (0 > row || row < 3 || 0 > column || column < 3) {
+        if (0 > row || row > 3 || 0 > column || column > 3) {
             console.log("Invalid Input");
             
             board.printBoard();
