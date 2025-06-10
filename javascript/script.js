@@ -186,15 +186,18 @@ const controller = (function() {
 })();
 
 
-function display() {
+const display = (function() {
     const board = gameBoard();
-    const body = document.querySelector("body");
-    const main = document.createElement("main");
-
-    body.appendChild(main);
 
     
     const renderGame = () => {
+
+        const body = document.querySelector("body");
+        
+        const main = document.createElement("main");
+        
+        body.appendChild(main);
+
         board.getBoard().map((row, index) => {
             
             let rows = document.createElement("div");
@@ -213,16 +216,16 @@ function display() {
                 columns.textContent = column;
                 
                 rows.appendChild(columns);
-            })
+            });
 
 
-        })
+        });
 
     };
 
+    renderGame();
 
-    return{renderGame};
-};
+})();
 
 
 
