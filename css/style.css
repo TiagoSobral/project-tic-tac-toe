@@ -1,7 +1,11 @@
+body {
+    display: flex;
+    justify-content: center;
+}
 
 main{
-    display: grid;
-    justify-content: center;
+    width: max-content;
+    border: 0.5px solid black;
     margin-top: 12rem;
 }
 
