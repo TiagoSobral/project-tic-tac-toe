@@ -188,7 +188,7 @@ function controller() {
 
 const display = (function() {
     const board = gameBoard();
-    // const controller = controller();
+    const controllerUI = controller();
     // const player = createPlayers().players;
 
     
@@ -236,9 +236,10 @@ const display = (function() {
         cell.forEach((element) => {
             
             element.addEventListener("click", () => {
-                let row = element.parentElement.dataset.index;
-                let column = element.dataset.index;
-                debugger
+                let row = Number(element.parentElement.dataset.index);
+                let column = Number(element.dataset.index);
+
+                controllerUI.playRound(row,column);
             });
         });
 
