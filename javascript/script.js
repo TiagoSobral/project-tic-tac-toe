@@ -66,6 +66,8 @@ function controller() {
 
     let playerTurn = player[0];
 
+    const getPlayerTurn = () => playerTurn;
+
     const changePlayerTurn = () => {
 
         if (playerTurn === player[0]) {
@@ -181,7 +183,7 @@ function controller() {
     console.log(boardValues);
     console.log(`Make a play ... ${playerTurn.name}`)
 
-    return {playRound};
+    return {playRound, getPlayerTurn};
 
 };
 
@@ -189,7 +191,7 @@ function controller() {
 const display = (function() {
     const board = gameBoard();
     const controllerUI = controller();
-    // const player = createPlayers().players;
+    const player = createPlayers().players;
 
     
     const renderGame = () => {
@@ -238,8 +240,12 @@ const display = (function() {
             element.addEventListener("click", () => {
                 let row = Number(element.parentElement.dataset.index);
                 let column = Number(element.dataset.index);
+                let activePlayerMark = controllerUI.getPlayerTurn().mark;;
 
                 controllerUI.playRound(row,column);
+
+                element.textContent = activePlayerMark;
+            
             });
         });
 
