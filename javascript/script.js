@@ -55,7 +55,7 @@ const createPlayers = (nameOne = "PlayerOne", nameTwo = "PlayerTwo") => {
     ];
 
     return {players};
-}
+};
 
 
 const controller = (function() {
@@ -184,6 +184,46 @@ const controller = (function() {
     return {playRound};
 
 })();
+
+
+function display() {
+    const board = gameBoard();
+    const body = document.querySelector("body");
+    const main = document.createElement("main");
+
+    body.appendChild(main);
+
+    
+    const renderGame = () => {
+        board.getBoard().map((row) => {
+            
+            let rows = document.createElement("div");
+
+            rows.setAttribute("class", "row");
+
+            main.appendChild(rows);
+            
+            
+            row.map((column) => {
+
+                let columns = document.createElement("div");
+               
+                columns.setAttribute("class", "column");
+
+                columns.textContent = column;
+                
+                rows.appendChild(columns);
+            })
+
+
+        })
+
+    };
+
+
+    return{renderGame};
+};
+
 
 
 
