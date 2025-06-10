@@ -58,7 +58,7 @@ const createPlayers = (nameOne = "PlayerOne", nameTwo = "PlayerTwo") => {
 };
 
 
-const controller = (function() {
+function controller() {
     
     const board = gameBoard();
     const boardValues = gameBoard().getBoard();
@@ -183,51 +183,66 @@ const controller = (function() {
 
     return {playRound};
 
-})();
+};
 
 
 const display = (function() {
     const board = gameBoard();
+    // const controller = controller();
+    // const player = createPlayers().players;
 
     
     const renderGame = () => {
 
         const body = document.querySelector("body");
-        
         const main = document.createElement("main");
         
         body.appendChild(main);
 
-        board.getBoard().map((row, index) => {
+        
+        board.getBoard().map((row, rowIndex) => {
             
             let rows = document.createElement("div");
 
-            rows.setAttribute("id", `r${index}`);
-
-            rows.setAttribute("class", "row")
+            rows.setAttribute("class", `row r${rowIndex}`)
 
             main.appendChild(rows);
             
             
-            row.map((column, index) => {
+            row.map((column, columnIndex) => {
 
                 let columns = document.createElement("div");
                
-                columns.setAttribute("id", `c${index}`);
-
-                columns.setAttribute("class", "column");
+                columns.setAttribute("class", `column ${rowIndex} ${columnIndex}`);
 
                 columns.textContent = column;
                 
                 rows.appendChild(columns);
             });
 
-
         });
 
     };
 
+    const playersClick = () => {
+        
+        let cell = document.querySelectorAll(".column");
+
+        cell.forEach((element) => {
+            
+            element.addEventListener("click", () => {
+                
+
+            });
+        });
+
+
+
+    };
+
+
     renderGame();
+    playersClick();
 
 })();
 
