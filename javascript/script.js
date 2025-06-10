@@ -202,7 +202,9 @@ const display = (function() {
             
             let rows = document.createElement("div");
 
-            rows.setAttribute("class", `row-${index}`);
+            rows.setAttribute("id", `r${index}`);
+
+            rows.setAttribute("class", "row")
 
             main.appendChild(rows);
             
@@ -211,7 +213,9 @@ const display = (function() {
 
                 let columns = document.createElement("div");
                
-                columns.setAttribute("class", `column-${index}`);
+                columns.setAttribute("id", `c${index}`);
+
+                columns.setAttribute("class", "column");
 
                 columns.textContent = column;
                 
