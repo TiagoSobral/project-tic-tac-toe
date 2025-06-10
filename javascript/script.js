@@ -204,7 +204,9 @@ const display = (function() {
             
             let rows = document.createElement("div");
 
-            rows.setAttribute("class", `row r${rowIndex}`)
+            rows.setAttribute("class", `row`);
+
+            rows.setAttribute("data-index", `${rowIndex}`);
 
             main.appendChild(rows);
             
@@ -212,8 +214,10 @@ const display = (function() {
             row.map((column, columnIndex) => {
 
                 let columns = document.createElement("div");
+
+                columns.setAttribute("class", "column");
                
-                columns.setAttribute("class", `column ${rowIndex} ${columnIndex}`);
+                columns.setAttribute("data-index", `${columnIndex}`);
 
                 columns.textContent = column;
                 
@@ -224,6 +228,7 @@ const display = (function() {
 
     };
 
+
     const playersClick = () => {
         
         let cell = document.querySelectorAll(".column");
@@ -231,12 +236,11 @@ const display = (function() {
         cell.forEach((element) => {
             
             element.addEventListener("click", () => {
-                
-
+                let row = element.parentElement.dataset.index;
+                let column = element.dataset.index;
+                debugger
             });
         });
-
-
 
     };
 
