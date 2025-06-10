@@ -195,20 +195,20 @@ function display() {
 
     
     const renderGame = () => {
-        board.getBoard().map((row) => {
+        board.getBoard().map((row, index) => {
             
             let rows = document.createElement("div");
 
-            rows.setAttribute("class", "row");
+            rows.setAttribute("class", `row-${index}`);
 
             main.appendChild(rows);
             
             
-            row.map((column) => {
+            row.map((column, index) => {
 
                 let columns = document.createElement("div");
                
-                columns.setAttribute("class", "column");
+                columns.setAttribute("class", `column-${index}`);
 
                 columns.textContent = column;
                 
