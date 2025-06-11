@@ -7,7 +7,7 @@ function gameBoard() {
     for (let r = 0; r < rows; r++) {
         board[r] = [];
         for (let c = 0; c < columns; c++ ) {
-            board[r].push(".");
+            board[r].push("");
         }
     };
     
@@ -17,7 +17,7 @@ function gameBoard() {
         const cellCheck = board.filter((element, index) => index === row).map((element) => element[column]);
         // let result;
 
-        if (cellCheck != ".") {
+        if (cellCheck != "") {
             // return result = false;
             return false;
         }
@@ -138,7 +138,7 @@ function controller() {
 
         // WIN VARIABLES  
         let isDraw =  board.getBoard()
-        .map((row) => row.every((column) => column !== "."))
+        .map((row) => row.every((column) => column !== ""))
         .every((column) => column === true);
         
         
@@ -196,10 +196,7 @@ const display = (function() {
     
     const renderGame = () => {
 
-        const body = document.querySelector("body");
-        const main = document.createElement("main");
-        
-        body.appendChild(main);
+        const main = document.querySelector("main");
 
         
         board.getBoard().map((row, rowIndex) => {
@@ -207,7 +204,6 @@ const display = (function() {
             let rows = document.createElement("div");
 
             rows.setAttribute("class", `row`);
-
             rows.setAttribute("data-index", `${rowIndex}`);
 
             main.appendChild(rows);
@@ -218,7 +214,6 @@ const display = (function() {
                 let columns = document.createElement("div");
 
                 columns.setAttribute("class", "column");
-               
                 columns.setAttribute("data-index", `${columnIndex}`);
 
                 columns.textContent = column;
@@ -244,15 +239,19 @@ const display = (function() {
 
                 controllerUI.playRound(row,column);
 
-                if (element.textContent == ".") {
+                if (element.textContent == "") {
                     element.textContent = activePlayerMark;
                 };
-                            
+
             });
         });
 
     };
 
+    const playersOnDisplay = () => {
+
+
+    };
 
     renderGame();
     playersClick();
