@@ -7,7 +7,7 @@ function gameBoard() {
     for (let r = 0; r < rows; r++) {
         board[r] = [];
         for (let c = 0; c < columns; c++ ) {
-            board[r].push("");
+            board[r].push(" ");
         }
     };
     
@@ -17,7 +17,7 @@ function gameBoard() {
         const cellCheck = board.filter((element, index) => index === row).map((element) => element[column]);
         // let result;
 
-        if (cellCheck != "") {
+        if (cellCheck != " ") {
             // return result = false;
             return false;
         }
@@ -138,7 +138,7 @@ function controller() {
 
         // WIN VARIABLES  
         let isDraw =  board.getBoard()
-        .map((row) => row.every((column) => column !== ""))
+        .map((row) => row.every((column) => column !== " "))
         .every((column) => column === true);
         
         
@@ -241,7 +241,7 @@ const display = (function() {
 
                 controllerUI.playRound(row,column);
 
-                if (element.textContent == "") {
+                if (element.textContent == " ") {
                     if (activePlayerMark === "X") {
                         element.children[0].setAttribute("src", "svgs/cross.svg");
                         // element.children[0].setAttribute("width", "150rem");
