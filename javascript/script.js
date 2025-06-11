@@ -212,6 +212,7 @@ const display = (function() {
             row.map((column, columnIndex) => {
 
                 let columns = document.createElement("div");
+                let img = document.createElement("img");
 
                 columns.setAttribute("class", "column");
                 columns.setAttribute("data-index", `${columnIndex}`);
@@ -219,6 +220,7 @@ const display = (function() {
                 columns.textContent = column;
                 
                 rows.appendChild(columns);
+                columns.appendChild(img);
             });
 
         });
@@ -235,12 +237,21 @@ const display = (function() {
             element.addEventListener("click", () => {
                 let row = Number(element.parentElement.dataset.index);
                 let column = Number(element.dataset.index);
-                let activePlayerMark = controllerUI.getPlayerTurn().mark;;
+                let activePlayerMark = controllerUI.getPlayerTurn().mark;
 
                 controllerUI.playRound(row,column);
 
                 if (element.textContent == "") {
-                    element.textContent = activePlayerMark;
+                    if (activePlayerMark === "X") {
+                        element.children[0].setAttribute("src", "svgs/cross.svg");
+                        // element.children[0].setAttribute("width", "150rem");
+                    }
+                    else {
+                        element.children[0].setAttribute("src", "svgs/circle.svg");
+                        // element.children[0].setAttribute("width", "120rem");
+                        // another possible way.
+                    }
+                    
                 };
 
             });
