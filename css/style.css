@@ -3,6 +3,11 @@ button {
     font: inherit;
 }
 
+img {
+    display: block;
+    max-width: 100%;
+}
+
 
 :root {
     --border-settings: 5px solid #29AB87;
@@ -69,6 +74,18 @@ footer {
     color: #1a6d56;
     text-shadow: 0.2rem 0.1rem 0.2rem rgba(10, 55, 37, 0.199);
     text-align: center;
+}
+
+.column {
+    font-size: 6rem;
+}
+
+img[src$="cross.svg"] {
+    width: 9.5rem;
+}
+
+img[src$="circle.svg"] {
+    width: 7.5rem;
 }
 
 
