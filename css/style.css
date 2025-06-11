@@ -1,3 +1,9 @@
+/* css reset for button */
+button {
+    font: inherit;
+}
+
+
 :root {
     --border-settings: 5px solid #29AB87;
 }
@@ -8,11 +14,19 @@ body {
     justify-content: center;
     background: #57C785;
     background: radial-gradient(circle,rgba(87, 199, 134, 0.527) 30%, rgba(54, 150, 104, 0.5) 100%);  
+    font-family:  "Roboto", helvetica;
 }
 
 
 main{
     margin: 10rem;
+}
+
+footer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 6rem;
 }
 
 .row {
@@ -39,4 +53,36 @@ main{
 .row > .column:nth-child(2) {
     border-left: var(--border-settings);
     border-right: var(--border-settings);
+}
+
+
+button.reset,
+button.play
+{
+    width: 8rem;
+    height: 4rem;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0.2rem 0.3rem 0.6rem 0.1rem rgba(0, 0, 0, 0.117);
+    background-color: rgba(255, 255, 255, 0.736);
+}
+
+button.reset,
+button.play {
+    font-weight: bold;
+    font-size: 1.1rem;
+    letter-spacing: 0.1rem;
+    color: #1a6d56;
+}
+
+button.reset:hover,
+button.play:hover {
+    background-color: #1a6d56;
+    color: white;
+    transform: scale(1.05);
+}
+
+button.reset:active,
+button.play:active {
+    transform: scale(0.95);
 }
