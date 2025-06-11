@@ -244,8 +244,10 @@ const display = (function() {
 
                 controllerUI.playRound(row,column);
 
-                element.textContent = activePlayerMark;
-            
+                if (element.textContent == ".") {
+                    element.textContent = activePlayerMark;
+                };
+                            
             });
         });
 
