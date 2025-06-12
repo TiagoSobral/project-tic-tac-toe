@@ -1,4 +1,6 @@
 /* css reset for button */
+
+
 button,
 input {
     font: inherit;
@@ -17,7 +19,8 @@ img {
 body {
     display: grid;
     grid-template-rows: 0.2fr 1fr 0.2fr;
-    justify-content: center;
+    grid-template-columns: 1fr;
+    justify-items: center;
     background: #57C785;
     background: radial-gradient(circle,rgba(87, 199, 134, 0.527) 30%, rgba(54, 150, 104, 0.5) 100%);  
     font-family:  "Roboto", helvetica;
@@ -25,19 +28,22 @@ body {
 
 
 main{
-    margin: 5rem;
+    margin: 2rem;
+    align-self: center;
 }
 
 header {
     display: flex;
-    justify-content: center;
+    align-items: center;
     flex-direction: column;
-    margin: 3rem;
+    margin: 2rem;
+    gap: 2rem;
 }
 
 footer {
-    display: flex;
     width: 100%;
+    margin: 2rem;
+    display: flex;
     justify-content: center;
     gap: 6rem;
 }
@@ -68,13 +74,21 @@ footer {
     border-right: var(--border-settings);
 }
 
+
 .title {
     font-size: 5rem;
     font-weight: bold;
     letter-spacing: 0.3rem;
     color: #1a6d56;
     text-shadow: 0.2rem 0.1rem 0.2rem rgba(10, 55, 37, 0.199);
-    text-align: center;
+    /* text-align: center; */
+}
+
+.active-player {
+    font-size: 1.5rem;
+    font-weight: 500;
+    /* text-align: center; */
+    color: #259676;
 }
 
 .column {
@@ -93,7 +107,7 @@ img[src$="circle.svg"] {
 button.reset,
 button.playersName
 {
-    width: 8rem;
+    width: 8.5rem;
     height: 4rem;
     border: none;
     border-radius: 30px;
@@ -105,7 +119,6 @@ button.reset,
 button.playersName {
     font-weight: bold;
     font-size: 1.1rem;
-    letter-spacing: 0.1rem;
     color: #1a6d56;
 }
 
