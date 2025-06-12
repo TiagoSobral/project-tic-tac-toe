@@ -58,11 +58,11 @@ const createPlayers = (nameOne = "PlayerOne", nameTwo = "PlayerTwo") => {
 };
 
 
-function controller() {
+function controller(input1, input2) {
     
     const board = gameBoard();
     const boardValues = gameBoard().getBoard();
-    const player = createPlayers().players;
+    const player = createPlayers(input1, input2).players;
 
     let playerTurn = player[0];
 
@@ -100,6 +100,7 @@ function controller() {
     
 
     const playRound = (row, column) => {
+
         
         let cellValid = board.isValid(row, column);
 
@@ -183,15 +184,30 @@ function controller() {
     console.log(boardValues);
     console.log(`Make a play ... ${playerTurn.name}`)
 
-    return {playRound, getPlayerTurn};
+    return {playRound, getPlayerTurn, newGame};
 
 };
 
 
+
 const display = (function() {
     const board = gameBoard();
-    const controllerUI = controller();
-    const player = createPlayers().players;
+
+    const subTitle = document.querySelector(".active-player");
+
+    const addPlayersBtn = document.querySelector(".playersName");
+
+    const dialog = document.querySelector("dialog");
+        const inputP1 = document.querySelector("input#playerOne");
+        const inputP2 = document.querySelector("input#playerTwo");
+        
+    const closeDialogBtn = document.querySelector(".close");
+    const enterDialogBtn = document.querySelector(".enter");
+
+    addPlayersBtn.addEventListener("click", () => {
+            playersOnDisplay();
+            dialog.showModal();
+        });
 
     
     const renderGame = () => {
@@ -228,8 +244,9 @@ const display = (function() {
     };
 
 
-    const playersClick = () => {
-        
+    const playersClick = (input1, input2) => {
+        let controllerUI = controller(input1, input2)
+
         let cell = document.querySelectorAll(".column");
 
         cell.forEach((element) => {
@@ -237,19 +254,21 @@ const display = (function() {
             element.addEventListener("click", () => {
                 let row = Number(element.parentElement.dataset.index);
                 let column = Number(element.dataset.index);
-                let activePlayerMark = controllerUI.getPlayerTurn().mark;
+                let activePlayer = controllerUI.getPlayerTurn();
 
                 controllerUI.playRound(row,column);
 
                 if (element.textContent == " ") {
-                    if (activePlayerMark === "X") {
+                    if (activePlayer.mark === "X") {
                         element.children[0].setAttribute("src", "svgs/cross.svg");
                         // element.children[0].setAttribute("width", "150rem");
+                        subTitle.textContent = `${activePlayer.name} has made a move...`;
                     }
                     else {
                         element.children[0].setAttribute("src", "svgs/circle.svg");
                         // element.children[0].setAttribute("width", "120rem");
                         // another possible way.
+                        subTitle.textContent = `${activePlayer.name} has made a move...`;
                     }
                     
                 };
@@ -262,13 +281,21 @@ const display = (function() {
     const playersOnDisplay = () => {
 
 
+        enterDialogBtn.addEventListener("click", (event) => {
+            event.preventDefault();
+            playersClick(inputP1.value, inputP2.value)
+            dialog.close();
+        });
+
+        closeDialogBtn.addEventListener("click", ()=> {
+            dialog.close();
+        });
+
     };
 
     renderGame();
     playersClick();
 
 })();
-
-
 
 
