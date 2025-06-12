@@ -63,12 +63,29 @@
 
 </head>
 <body>
+    <dialog>
+        <form>
+            <div>
+                <label for="playerOne">Player One</label>
+                <input type="text" name="playerOne" id="playerOne" placeholder="name">
+            </div>
+            <div>
+                <label for="playerTwo">Player Two</label>
+                <input type="text" name="playerOne" id="playerTwo" placeholder="name">
+            </div>
+            <div>
+                <button class="enter">Enter</button>
+                <button class="close">Close</button>
+            </div>
+        </form>
+    </dialog>
     <header>
         <div class="title">TIC TAC TOE</div>
         <div class="active-player"></div>
     </header>
     <main></main>
     <footer>
+        <button class="playersName">Add Players</button>
         <button class="reset">Restart</button>
     </footer>
 </body>
