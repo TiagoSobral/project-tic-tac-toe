@@ -37,11 +37,11 @@ function gameBoard() {
 
     };
 
-    const printBoard = () => {
-       return console.log(board);
-    };
+    // const getBoard = () => {
+    //    return console.log(board);
+    // };
 
-    return {getBoard, chooseCell, isValid, printBoard};
+    return {getBoard, chooseCell, isValid};
 };
 
 
@@ -61,7 +61,7 @@ const createPlayers = (nameOne = "PlayerOne", nameTwo = "PlayerTwo") => {
 function controller(input1, input2) {
     
     const board = gameBoard();
-    const boardValues = gameBoard().getBoard();
+    // const boardValues = gameBoard().getBoard();
     const player = createPlayers(input1, input2).players;
 
     let playerTurn = player[0];
@@ -88,11 +88,11 @@ function controller(input1, input2) {
         
         playerTurn =  player[0];
 
-        console.log("Let's play some Tic Tac Toe");
+        // console.log("Let's play some Tic Tac Toe");
+
+        board.getBoard;
        
-        const board = gameBoard().getBoard();
-       
-        console.log(board);
+        console.log(board.getBoard());
 
         console.log(`Make a play ... ${playerTurn.name}`)
     }
@@ -108,7 +108,7 @@ function controller(input1, input2) {
         if (0 > row || row > 3 || 0 > column || column > 3) {
             console.log("Invalid Input");
             
-            board.printBoard();
+           console.log(board.getBoard());
             
             console.log(`${playerTurn.name} try again...`)
             
@@ -121,7 +121,7 @@ function controller(input1, input2) {
             
             board.chooseCell(row, column, playerTurn.mark);
             
-            board.printBoard();
+            console.log(board.getBoard());
             
             changePlayerTurn();
         } 
@@ -129,7 +129,7 @@ function controller(input1, input2) {
         else {
             console.log(`${playerTurn.name}, that play is not available...`);
             
-            board.printBoard();
+            console.log(board.getBoard());
 
             console.log(`${playerTurn.name} try again...`);
             
@@ -180,9 +180,9 @@ function controller(input1, input2) {
 
     };
 
-    console.log(`Let's Play some Tic Tac Toe!`)
-    console.log(boardValues);
-    console.log(`Make a play ... ${playerTurn.name}`)
+    // console.log(`Let's Play some Tic Tac Toe!`)
+    // console.log(board.getBoard());
+    // console.log(`Make a play ... ${playerTurn.name}`)
 
     return {playRound, getPlayerTurn, newGame};
 
@@ -195,7 +195,10 @@ const display = (function() {
 
     const subTitle = document.querySelector(".active-player");
 
+    let cell;
+
     const addPlayersBtn = document.querySelector(".playersName");
+    const restartBtn = document.querySelector(".reset");
 
     const dialog = document.querySelector("dialog");
         const inputP1 = document.querySelector("input#playerOne");
@@ -203,11 +206,6 @@ const display = (function() {
         
     const closeDialogBtn = document.querySelector(".close");
     const enterDialogBtn = document.querySelector(".enter");
-
-    addPlayersBtn.addEventListener("click", () => {
-            playersOnDisplay();
-            dialog.showModal();
-        });
 
     
     const renderGame = () => {
@@ -241,17 +239,20 @@ const display = (function() {
 
         });
 
+        cell = document.querySelectorAll(".column");
+
     };
 
 
     const playersClick = (input1, input2) => {
         let controllerUI = controller(input1, input2)
 
-        let cell = document.querySelectorAll(".column");
+        // let cell = document.querySelectorAll(".column");
 
         cell.forEach((element) => {
             
             element.addEventListener("click", () => {
+               
                 let row = Number(element.parentElement.dataset.index);
                 let column = Number(element.dataset.index);
                 let activePlayer = controllerUI.getPlayerTurn();
@@ -259,12 +260,16 @@ const display = (function() {
                 controllerUI.playRound(row,column);
 
                 if (element.textContent == " ") {
+                   
                     if (activePlayer.mark === "X") {
+                       
                         element.children[0].setAttribute("src", "svgs/cross.svg");
                         // element.children[0].setAttribute("width", "150rem");
                         subTitle.textContent = `${activePlayer.name} has made a move...`;
                     }
-                    else {
+                    
+                    if (activePlayer.mark === "O") {
+                       
                         element.children[0].setAttribute("src", "svgs/circle.svg");
                         // element.children[0].setAttribute("width", "120rem");
                         // another possible way.
@@ -282,19 +287,52 @@ const display = (function() {
 
 
         enterDialogBtn.addEventListener("click", (event) => {
+            
             event.preventDefault();
             playersClick(inputP1.value, inputP2.value)
             dialog.close();
         });
 
         closeDialogBtn.addEventListener("click", ()=> {
+           
             dialog.close();
+        });
+
+    };
+
+    const btnAction = () => {
+
+        restartBtn.addEventListener("click", () => {
+
+            let rows = document.querySelectorAll(".row");
+            
+            cell.forEach((element) => {
+                element.children[0].removeAttribute("src");
+            });
+
+            rows.forEach((element) => {
+                element.remove()
+            })
+
+
+
+            controller().newGame();
+            renderGame();
+            playersClick();
+        });
+
+        addPlayersBtn.addEventListener("click", () => {
+            
+            playersOnDisplay();
+            dialog.showModal();
         });
 
     };
 
     renderGame();
     playersClick();
+    btnAction();
+
 
 })();
 
