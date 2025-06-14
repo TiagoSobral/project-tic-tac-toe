@@ -73,7 +73,6 @@ function controller(input1, input2) {
 
     let playerTurn = player[0];
 
-    const getPlayerTurn = () => playerTurn;
 
     const changePlayerTurn = () => {
 
@@ -87,9 +86,21 @@ function controller(input1, input2) {
             playerTurn = player[0];
       }
        
-      console.log(`Its your turn ... ${playerTurn.name}!`)
+      console.log(`Its your turn ... ${getPlayerTurn().name}!`)
     }
 
+    const getPlayerTurn = () => playerTurn;
+
+    const newGame = () => {
+        
+        playerTurn =  player[0];
+
+        board.newBoard();
+
+        console.log(board.getBoard());
+
+        console.log(`Make a play ... ${getPlayerTurn().name}`);
+    };
     
 
     const playRound = (row, column) => {
@@ -112,76 +123,72 @@ function controller(input1, input2) {
         if (cellValid === true) {
             console.log(`${playerTurn.name} has made a move...`);
             
-            board.chooseCell(row, column, playerTurn.mark);
+            board.chooseCell(row, column, getPlayerTurn().mark);
 
             console.log(board.getBoard())
             
-            changePlayerTurn();
         } 
-
+        // if cell is not available
         else {
-            console.log(`${playerTurn.name}, that play is not available...`);
+            console.log(`${getPlayerTurn().name}, that play is not available...`);
 
             console.log(board.getBoard());
 
-            console.log(`${playerTurn.name} try again...`);
-            
+            console.log(`${getPlayerTurn().name} try again...`);
+
             return;
+            
         }
         
+        // get board state after the move was made
+        const updatedBoard = board.getBoard();
+
 
         // WIN VARIABLES  
-        let isDraw =  board.getBoard()
-        .map((row) => row.every((column) => column !== " "))
+        let isDraw =  updatedBoard
+        .map((row) => row.every((column) => column != " "))
         .every((column) => column === true);
         
         
         // check if rows or columns have the same value.
-        let rowWinner = board.getBoard()
-        .map((row) => row.every((column) => column === playerTurn.mark))
+        let rowWinner = updatedBoard
+        .map((row) => row.every((column) => column == getPlayerTurn().mark))
         .some((row) => row === true);
         
         
         let columnWinner = () => {
             let columnOfBoleans = [];
         
+            // for every column it checks if all the values are the same (returns true), after
+            // if any of the columns returns true means we have a winner.
             for (let i = 0; i < 3 ; i++) {
-                columnOfBoleans.push(board.getBoard().every((column) => column[i] === playerTurn.mark));
+                columnOfBoleans.push(updatedBoard.every((column) => column[i] == getPlayerTurn().mark));
             }
 
           return  columnOfBoleans.some((column) => column === true);
         }
 
-        
-        let diagonalRight = () => [board.getBoard()[0][0], board.getBoard()[1][1], board.getBoard()[2][2]]
+        // checks for diagonal wins
+        let diagonalRight = [updatedBoard[0][0], updatedBoard[1][1], updatedBoard[2][2]]
         .every((value) => value === "X"|| value === "O");
 
-        let diagonalLeft = () => [board.getBoard()[0][2], board.getBoard()[1][1], board.getBoard()[2][0]]
+        let diagonalLeft = [updatedBoard[0][2], updatedBoard[1][1], updatedBoard[2][0]]
         .every((value) => value === "X" || value === "O");
 
 
         // WIN CONDITIONS
-        if (rowWinner || columnWinner() || diagonalLeft() || diagonalRight()) {
-           console.log(`We have a winner, congratulations ${playerTurn.name}`);
-           
+        if (rowWinner || columnWinner() || diagonalLeft || diagonalRight) {
+           console.log(`We have a winner, congratulations ${getPlayerTurn().name}`);
+           return
         }
 
         else if (isDraw) {
             console.log(`Better luck next time, its a Draw ...`);
-            
+            return
         }
 
-    };
+        changePlayerTurn();
 
-    const newGame = () => {
-        
-        playerTurn =  player[0];
-
-        board.newBoard();
-
-        console.log(board.getBoard());
-
-        console.log(`Make a play ... ${playerTurn.name}`);
     };
 
     // console.log(`Let's Play some Tic Tac Toe!`)
@@ -194,7 +201,6 @@ function controller(input1, input2) {
 
 const display = (function() { 
     const game = controller();
-    const board = game.getBoard();
 
     const subTitle = document.querySelector(".active-player");
 
@@ -213,15 +219,17 @@ const display = (function() {
 
     let cell;
 
-    
+    // takes the board array from console version, loops through it and makes it 
+    // dom elements creating the UI board.
     const renderGame = () => {
+
+        const board = game.getBoard();
         
         board.map((row, rowIndex) => {
             
             let rows = document.createElement("div");
 
             rows.setAttribute("class", `row`);
-            rows.setAttribute("data-index", `${rowIndex}`);
 
             main.appendChild(rows);
             
@@ -231,8 +239,10 @@ const display = (function() {
                 let columns = document.createElement("div");
                 let img = document.createElement("img");
 
+                // data-attribute is set to help with matching the index of the array board.
                 columns.setAttribute("class", "column");
-                columns.setAttribute("data-index", `${columnIndex}`);
+                columns.setAttribute("data-rowIndex", `${rowIndex}`);
+                columns.setAttribute("data-columnIndex", `${columnIndex}`);
 
                 columns.textContent = " ";
                 
@@ -243,43 +253,52 @@ const display = (function() {
         });
 
         cell = document.querySelectorAll(".column");
-
+        playersClick();
+        btnAction();
     };
 
 
     function playersClick() {
         // let game = controller(input1, input2)
 
-        cell.forEach((element) => {
+        cell.forEach ((element) => {
             
             element.addEventListener("click", () => {
                
-                let row = Number(element.parentElement.dataset.index);
-                let column = Number(element.dataset.index);
+                let row = Number(element.dataset.rowindex);
+                let column = Number(element.dataset.columnindex);
                 let activePlayer = game.getPlayerTurn();
+                let  img = element.firstElementChild;
+
+                // debugger
 
                 game.playRound(row,column);
-
-                if (element.textContent == " ") {
+                // doesn't allow user to click on unavailable cell
+                // based on the active player at the moment an icon will be set either
+                // a cross or a circle.
+                // the subtitle will be updated to the next player.
+                if (!img.hasAttribute("src")) {
                    
                     if (activePlayer.mark === "X") {
-                       
+                        
                         element.children[0].setAttribute("src", "svgs/cross.svg");
-                        // element.children[0].setAttribute("width", "150rem");
+
                         subTitle.textContent = `${activePlayer.name} has made a move...`;
+                        // subTitle.textContent = `${activePlayer.name} its your turn...`;
                     }
                     
                     if (activePlayer.mark === "O") {
-                       
+
+
                         element.children[0].setAttribute("src", "svgs/circle.svg");
-                        // element.children[0].setAttribute("width", "120rem");
-                        // another possible way.
+
                         subTitle.textContent = `${activePlayer.name} has made a move...`;
                     }
                     
                 };
 
             });
+
         });
 
     };
@@ -332,8 +351,6 @@ const display = (function() {
     };
 
     renderGame();
-    playersClick();
-    btnAction();
 
 
 })();
