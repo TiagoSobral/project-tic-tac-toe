@@ -174,11 +174,9 @@ function controller(input1, input2) {
         }
 
         // checks for diagonal wins
-        let diagonalRight = [updatedBoard[0][0], updatedBoard[1][1], updatedBoard[2][2]]
-        .every((value) => value === "X"|| value === "O");
+        let diagonalRight = [updatedBoard[0][0], updatedBoard[1][1], updatedBoard[2][2]].every((value) => value === ("X" || "O"));
 
-        let diagonalLeft = [updatedBoard[0][2], updatedBoard[1][1], updatedBoard[2][0]]
-        .every((value) => value === "X" || value === "O");
+        let diagonalLeft = [updatedBoard[2][0], updatedBoard[1][1], updatedBoard[0][2]].every((value) => value === ("X" || "O"));
 
 
         // WIN CONDITIONS
@@ -279,7 +277,7 @@ const display = (function() {
                 let  img = element.firstElementChild;
                 
                 let activePlayer = game.getPlayerTurn();
-
+                // debugger
                 game.playRound(row,column);
 
                 // doesn't allow user to click on unavailable cell
