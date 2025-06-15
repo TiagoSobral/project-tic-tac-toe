@@ -174,13 +174,17 @@ function controller(input1, input2) {
         }
 
         // checks for diagonal wins
-        let diagonalRight = [updatedBoard[0][0], updatedBoard[1][1], updatedBoard[2][2]].every((value) => value === ("X" || "O"));
+        let diagonalRight = [updatedBoard[0][0], updatedBoard[1][1], updatedBoard[2][2]];
 
-        let diagonalLeft = [updatedBoard[2][0], updatedBoard[1][1], updatedBoard[0][2]].every((value) => value === ("X" || "O"));
+        let diagonalLeft = [updatedBoard[2][0], updatedBoard[1][1], updatedBoard[0][2]];
+
+        let dRightWinner = diagonalRight.every((value) => value === "X") || diagonalRight.every((value) => value === "O");
+
+        let dLeftWinner = diagonalLeft.every((value) => value === "X") || diagonalLeft.every((value) => value === "O");
 
 
         // WIN CONDITIONS
-        if (rowWinner || columnWinner() || diagonalLeft || diagonalRight) {
+        if (rowWinner || columnWinner() || dLeftWinner || dRightWinner) {
            console.log(`We have a winner, congratulations ${getPlayerTurn().name}`);
            winner = `We have a winner, congratulations ${getPlayerTurn().name}`;
            return
