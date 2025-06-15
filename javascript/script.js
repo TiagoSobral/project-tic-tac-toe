@@ -342,6 +342,7 @@ const display = (function() {
             dialog.close();
         });
 
+        btnAction();
 
     };
 
@@ -367,17 +368,16 @@ const display = (function() {
             playersClick();
         });
 
-        addPlayersBtn.addEventListener("click", () => {
+
+    };
+
+    addPlayersBtn.addEventListener("click", () => {
             
             playersOnDisplay();
             dialog.showModal();
         });
 
-    };
-
     renderGame();
-    btnAction();
-
-
+    
 
 })();
