@@ -111,7 +111,7 @@ img[src$="circle.svg"] {
 button.reset,
 button.playersName
 {
-    width: 8.5rem;
+    width: 7.5rem;
     height: 4rem;
     border: none;
     border-radius: 30px;
@@ -203,4 +203,9 @@ label{
     box-shadow: 0.2rem 0.3rem 0.6rem 0.1rem rgba(0, 0, 0, 0.117);
     background-color: #1a6d56;
     color: white;
+}
+
+.enter:active,
+.close:active {
+    transform: scale(0.95);
 }
