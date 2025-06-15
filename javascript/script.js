@@ -53,7 +53,7 @@ function gameBoard() {
 };
 
 
-function createPlayers(nameOne = "PlayerOne", nameTwo = "PlayerTwo") {
+function createPlayers(nameOne = "Player One", nameTwo = "Player Two") {
     const players = [
         {   name: nameOne,
             mark: "X",
@@ -223,7 +223,7 @@ const display = (function() {
     // dom elements creating the UI board.
     const renderGame = () => {
 
-        const board = game.getBoard();
+        const board = controller().getBoard();
         
         board.map((row, rowIndex) => {
             
@@ -253,13 +253,11 @@ const display = (function() {
         });
 
         cell = document.querySelectorAll(".column");
-        playersClick();
-        btnAction();
     };
 
 
-    function playersClick() {
-        // let game = controller(input1, input2)
+    function playersClick(input1 = "Player One", input2 = "Player Two") {
+        const game = controller(input1, input2)
 
         cell.forEach ((element) => {
             
@@ -309,12 +307,19 @@ const display = (function() {
         enterDialogBtn.addEventListener("click", (event) => {
             
             event.preventDefault();
-            playersClick(inputP1.value, inputP2.value)
+
+            if (inputP1.value && inputP2.value){
+                playersClick(inputP1.value, inputP2.value);
+            }
+            else {
+                playersClick();
+            }
+
             dialog.close();
         });
 
         closeDialogBtn.addEventListener("click", ()=> {
-           
+            
             dialog.close();
         });
 
@@ -322,7 +327,7 @@ const display = (function() {
 
 
     const btnAction = () => {
-    
+        
 
         restartBtn.addEventListener("click", () => {
 
@@ -351,6 +356,8 @@ const display = (function() {
     };
 
     renderGame();
+    btnAction();
+
 
 
 })();
