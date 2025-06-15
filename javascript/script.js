@@ -73,7 +73,13 @@ function controller(input1, input2) {
 
     let playerTurn = player[0];
 
+    const getPlayerTurn = () => playerTurn;
 
+     let winner;
+
+    const getWinner = () => winner;
+
+    
     const changePlayerTurn = () => {
 
         if (playerTurn === player[0]) {
@@ -89,7 +95,6 @@ function controller(input1, input2) {
       console.log(`Its your turn ... ${getPlayerTurn().name}!`)
     }
 
-    const getPlayerTurn = () => playerTurn;
 
     const newGame = () => {
         
@@ -179,11 +184,13 @@ function controller(input1, input2) {
         // WIN CONDITIONS
         if (rowWinner || columnWinner() || diagonalLeft || diagonalRight) {
            console.log(`We have a winner, congratulations ${getPlayerTurn().name}`);
+           winner = `We have a winner, congratulations ${getPlayerTurn().name}`;
            return
         }
 
         else if (isDraw) {
             console.log(`Better luck next time, its a Draw ...`);
+            winner = `Better luck next time, its a Draw ...`;
             return
         }
 
@@ -195,13 +202,12 @@ function controller(input1, input2) {
     // console.log(board.getBoard());
     // console.log(`Make a play ... ${playerTurn.name}`)
 
-    return {playRound, getPlayerTurn, newGame, getBoard: board.getBoard};
+    return {playRound, getPlayerTurn, newGame, getBoard: board.getBoard, getWinner};
 };
 
 
 const display = (function() { 
     const game = controller();
-    let activePlayer = game.getPlayerTurn();
 
 
     const subTitle = document.querySelector(".active-player");
@@ -259,6 +265,7 @@ const display = (function() {
 
 
     function playersClick(input1 = "Player One", input2 = "Player Two") {
+        
         const game = controller(input1, input2)
 
         subTitle.textContent = `${game.getPlayerTurn().name} its your turn...`;
@@ -269,8 +276,9 @@ const display = (function() {
                
                 let row = Number(element.dataset.rowindex);
                 let column = Number(element.dataset.columnindex);
-                let activePlayer = game.getPlayerTurn();
                 let  img = element.firstElementChild;
+                
+                let activePlayer = game.getPlayerTurn();
 
                 game.playRound(row,column);
 
@@ -292,8 +300,15 @@ const display = (function() {
                         element.children[0].setAttribute("src", "svgs/circle.svg");
 
                     }
+
+                    // this player turn value call is to get the player who is about to play the next round
                     subTitle.textContent = `${game.getPlayerTurn().name} its your turn...`;
-                    
+
+
+                    if(game.getWinner() != undefined) {
+                        subTitle.textContent = game.getWinner();
+                    }
+
                 };
 
 
