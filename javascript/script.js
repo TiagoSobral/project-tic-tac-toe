@@ -15,7 +15,6 @@ function gameBoard() {
 
     const isValid = (row, column) => {
         const cellCheck = board.filter((element, index) => index === row).map((element) => element[column]);
-        // let result;
 
         if (cellCheck != " ") {
             // return result = false;
@@ -39,6 +38,7 @@ function gameBoard() {
     };
 
     const newBoard = () => {
+        // takes the board and puts it back to the initial value: " ";  
         
         for (let i = 0; i < board.length ; i++) {
             for (let j = 0; j < board[i].length; j++) {
@@ -174,6 +174,7 @@ function controller(input1, input2) {
         }
 
         // checks for diagonal wins
+        // has to be done individually for X and for O otherwise it won't work.
         let diagonalRight = [updatedBoard[0][0], updatedBoard[1][1], updatedBoard[2][2]];
 
         let diagonalLeft = [updatedBoard[2][0], updatedBoard[1][1], updatedBoard[0][2]];
@@ -216,7 +217,7 @@ const display = (function() {
 
     const main = document.querySelector("main");
 
-    const addPlayersBtn = document.querySelector(".playersName");
+    const playBtn = document.querySelector(".playersName");
     const restartBtn = document.querySelector(".reset");
 
     const dialog = document.querySelector("dialog");
@@ -265,7 +266,8 @@ const display = (function() {
         cell = document.querySelectorAll(".column");
     };
 
-
+    // the function that sets event listeners to all cells and runs the 
+    // playRound function based on the data index that cell has.
     function playersClick(input1 = "Player One", input2 = "Player Two") {
         
         const game = controller(input1, input2)
@@ -281,7 +283,7 @@ const display = (function() {
                 let  img = element.firstElementChild;
                 
                 let activePlayer = game.getPlayerTurn();
-                // debugger
+                
                 game.playRound(row,column);
 
                 // doesn't allow user to click on unavailable cell
@@ -292,6 +294,7 @@ const display = (function() {
                    
                     if (activePlayer.mark === "X") {
                         
+                        // used svgs instead of textContent to match the theme.
                         element.children[0].setAttribute("src", "svgs/cross.svg");
 
                     }
@@ -307,6 +310,8 @@ const display = (function() {
                     subTitle.textContent = `${game.getPlayerTurn().name} its your turn...`;
 
 
+                    // checks winner value variable in playRound and 
+                    // returns it to subtitle.
                     if(game.getWinner() != undefined) {
                         subTitle.textContent = game.getWinner();
                     }
@@ -351,6 +356,9 @@ const display = (function() {
         
 
         restartBtn.addEventListener("click", () => {
+            // eliminates the elements created by render game and clears
+            // the array, so it can call render again and set 
+            // the event listeners as well
 
             let rows = document.querySelectorAll(".row");
             
@@ -371,13 +379,13 @@ const display = (function() {
 
     };
 
-    addPlayersBtn.addEventListener("click", () => {
+    // is outside so it only allows the restart button to be clickable once 
+    // play is clicked.
+    playBtn.addEventListener("click", () => {
             
             playersOnDisplay();
             dialog.showModal();
         });
 
     renderGame();
-    
-
 })();
