@@ -201,6 +201,8 @@ function controller(input1, input2) {
 
 const display = (function() { 
     const game = controller();
+    let activePlayer = game.getPlayerTurn();
+
 
     const subTitle = document.querySelector(".active-player");
 
@@ -219,13 +221,13 @@ const display = (function() {
 
     let cell;
 
+
     // takes the board array from console version, loops through it and makes it 
     // dom elements creating the UI board.
     const renderGame = () => {
 
-        const board = controller().getBoard();
         
-        board.map((row, rowIndex) => {
+        game.getBoard().map((row, rowIndex) => {
             
             let rows = document.createElement("div");
 
@@ -259,6 +261,8 @@ const display = (function() {
     function playersClick(input1 = "Player One", input2 = "Player Two") {
         const game = controller(input1, input2)
 
+        subTitle.textContent = `${game.getPlayerTurn().name} its your turn...`;
+
         cell.forEach ((element) => {
             
             element.addEventListener("click", () => {
@@ -268,9 +272,8 @@ const display = (function() {
                 let activePlayer = game.getPlayerTurn();
                 let  img = element.firstElementChild;
 
-                // debugger
-
                 game.playRound(row,column);
+
                 // doesn't allow user to click on unavailable cell
                 // based on the active player at the moment an icon will be set either
                 // a cross or a circle.
@@ -281,8 +284,6 @@ const display = (function() {
                         
                         element.children[0].setAttribute("src", "svgs/cross.svg");
 
-                        subTitle.textContent = `${activePlayer.name} has made a move...`;
-                        // subTitle.textContent = `${activePlayer.name} its your turn...`;
                     }
                     
                     if (activePlayer.mark === "O") {
@@ -290,10 +291,11 @@ const display = (function() {
 
                         element.children[0].setAttribute("src", "svgs/circle.svg");
 
-                        subTitle.textContent = `${activePlayer.name} has made a move...`;
                     }
+                    subTitle.textContent = `${game.getPlayerTurn().name} its your turn...`;
                     
                 };
+
 
             });
 
@@ -322,6 +324,7 @@ const display = (function() {
             
             dialog.close();
         });
+
 
     };
 
